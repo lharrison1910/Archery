@@ -39,7 +39,9 @@ export const postData = async (param) => {
       return response;
     } else {
       const response = await client.query(
-        `INSERT INTO Scores (userid, scores) VALUES ('${param.userId}, ${param.scores})`
+        `INSERT INTO Scores (userid, scores) VALUES ('${
+          param.userId
+        }', '${JSON.stringify(param.scores)}')`
       );
       return response;
     }
@@ -51,9 +53,13 @@ export const postData = async (param) => {
 export const updateData = async (param) => {
   try {
     if (param.table === "Scores") {
+      console.log(param.userId);
       const response = await client.query(
-        `UPDATE Scores SET scores=${param.scores} WHERE id=${param.id}`
+        `UPDATE Scores SET scores='${JSON.stringify(param.scores)}' WHERE id='${
+          param.userId
+        }'`
       );
+      console.log("here");
       return response;
     } else {
       const response = await client.query(`

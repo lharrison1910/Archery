@@ -1,18 +1,25 @@
 import express from "express";
-import { getData } from "../modules/db.js";
+import { getData, postData, updateData } from "../modules/db.js";
 
 export const scoreRoute = express.Router();
 scoreRoute.use(express.json());
 
 // get scores for user
 scoreRoute.post("/scores", async (req, res) => {
-  res.send("this will be data");
   const id = req.body.id;
   const scores = await getData({ table: "Scores", column: "id", query: id });
   res.send(scores[0]);
 });
 
 // add new scores
-scoreRoute.post("/new", (req, res) => {
-  res.send("success");
+scoreRoute.post("/new", async (req, res) => {
+  const [id, scores] = [req.body.id, req.body.scores];
+  const response = await postData({ table: "Scores", userId: id, scores });
+  res.send(response);
+});
+
+scoreRoute.post("/update", async (req, res) => {
+  const [id, scores] = [req.body.id, req.body.scores];
+  const response = await updateData({ table: "Scores", userId: id, scores });
+  res.send(response);
 });
