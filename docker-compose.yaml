@@ -1,8 +1,13 @@
 services:
   # frontend: frontend
 
-  # backend:
-  #   container_name: backend
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - 3000:3000
+    networks:
+      - backend
 
   database:
     container_name: db
@@ -15,6 +20,8 @@ services:
       - POSTGRES_USER=developer
       - POSTGRES_PASSWORD=password_123
       - POSTGRES_DB=users
+    networks:
+      - backend
 
   pgadmin:
     container_name: pg-admin-archery
@@ -23,14 +30,19 @@ services:
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL:
-
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
     ports:
       - "5050:80"
+    networks:
+      - backend
 
 volumes:
   pgadmin-data:
     driver: local
   db:
     driver: local
+
+networks:
+  backend:
+    driver: bridge

@@ -3,7 +3,7 @@ import { Client } from "pg";
 const client = new Client({
   user: "developer",
   password: "password_123",
-  host: "0.0.0.0",
+  host: "db",
   port: 5432,
   database: "Archery",
 });
@@ -59,7 +59,6 @@ export const updateData = async (param) => {
           param.userId
         }'`
       );
-      console.log("here");
       return response;
     } else {
       const response = await client.query(`
@@ -75,8 +74,17 @@ export const updateData = async (param) => {
 };
 
 export const deleteData = async (id) => {
+  const deleteUserData = async () => {
+    try {
+      client.query(`DELETE FROM users WHERE id='${id}'`);
+      client.query(`DELETE FROM Scores WHERE userid='${id}'`);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
   try {
-    const response = await client.query(`DELETE FROM users WHERE id='${id}'`);
+    const response = await deleteUserData();
     return response;
   } catch (error) {
     return error;

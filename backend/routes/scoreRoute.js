@@ -8,6 +8,7 @@ scoreRoute.use(express.json());
 scoreRoute.post("/scores", async (req, res) => {
   const id = req.body.id;
   const scores = await getData({ table: "Scores", column: "id", query: id });
+  console.log(scores[0]);
   res.send(scores[0]);
 });
 
@@ -15,11 +16,13 @@ scoreRoute.post("/scores", async (req, res) => {
 scoreRoute.post("/new", async (req, res) => {
   const [id, scores] = [req.body.id, req.body.scores];
   const response = await postData({ table: "Scores", userId: id, scores });
+  console.log(response);
   res.send(response);
 });
 
 scoreRoute.post("/update", async (req, res) => {
   const [id, scores] = [req.body.id, req.body.scores];
   const response = await updateData({ table: "Scores", userId: id, scores });
+  console.log(response);
   res.send(response);
 });
