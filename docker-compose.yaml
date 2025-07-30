@@ -1,0 +1,48 @@
+services:
+  # frontend: frontend
+
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - 3000:3000
+    networks:
+      - backend
+
+  database:
+    container_name: db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=password_123
+      - POSTGRES_DB=users
+    networks:
+      - backend
+
+  pgadmin:
+    container_name: pg-admin-archery
+    image: dpage/pgadmin4
+    restart: always
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    networks:
+      - backend
+
+volumes:
+  pgadmin-data:
+    driver: local
+  db:
+    driver: local
+
+networks:
+  backend:
+    driver: bridge
