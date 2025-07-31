@@ -1,4 +1,15 @@
 import { Client } from "pg";
+// import dotenv from "dotenv";
+
+// dotenv.config({ path: ".env" });
+
+// const client = new Client({
+//   user: process.env.POSTGRES_USER,
+//   password: process.env.POSTGRES_PASSWORD,
+//   host: process.env.POSTGRES_HOST,
+//   port: process.env.POSTGRES_PORT,
+//   database: process.env.POSTGRES_DB,
+// });
 
 const client = new Client({
   user: "developer",
@@ -30,10 +41,10 @@ export const getData = async (param = null) => {
 
 export const postData = async (param) => {
   try {
-    if (param.table === "users") {
+    if (param.table === "Users") {
       const response = await client.query(
-        `INSERT INTO users (username, password, name, contact, club, role)
-    VALUES ('${param.userData.username}', '${param.userData.password}','${param.userData.name}','${param.userData.club}','user')
+        `INSERT INTO Users (username, password, name, contact, club, role)
+    VALUES ('${param.userData.username}', '${param.userData.password}','${param.userData.name}','${param.userData.contact}','${param.userData.club}','user')
     `
       );
       return response;
@@ -62,7 +73,7 @@ export const updateData = async (param) => {
       return response;
     } else {
       const response = await client.query(`
-            UPDATE users 
+            UPDATE Users 
             SET username='${userData.username}', password='${userData.password}', name='${userData.name}', club='${userData.club}', role='${userData.role}'
             WHERE id='${userData.id}'
             `);
@@ -76,7 +87,7 @@ export const updateData = async (param) => {
 export const deleteData = async (id) => {
   const deleteUserData = async () => {
     try {
-      client.query(`DELETE FROM users WHERE id='${id}'`);
+      client.query(`DELETE FROM Users WHERE id='${id}'`);
       client.query(`DELETE FROM Scores WHERE userid='${id}'`);
       return true;
     } catch (error) {
