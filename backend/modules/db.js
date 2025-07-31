@@ -33,7 +33,7 @@ export const postData = async (param) => {
     if (param.table === "users") {
       const response = await client.query(
         `INSERT INTO users (username, password, name, contact, club, role)
-    VALUES ('${param.userData.username}', '${param.userData.password}','${param.userData.name}','${param.userData.contact}','${param.userData.club}','user')
+    VALUES ('${param.userData.username}', '${param.userData.password}','${param.userData.name}','${param.userData.club}','user')
     `
       );
       return response;
@@ -63,7 +63,7 @@ export const updateData = async (param) => {
     } else {
       const response = await client.query(`
             UPDATE users 
-            SET username=${userData.username}, password=${userData.password}, name=${userData.name}, contact=${userData.contactNo}, club=${userData.club}, role=${userData.role}
+            SET username='${userData.username}', password='${userData.password}', name='${userData.name}', club='${userData.club}', role='${userData.role}'
             WHERE id='${userData.id}'
             `);
       return response;

@@ -1,14 +1,12 @@
 import { Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useUser } from "../../context/userContext";
-import "./Login.css";
+import { login } from "../../utils/UserCrud";
 
 function Login() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-  const { setUser } = useUser();
   const TextFieldStyle = {
     marginBottom: "1rem",
     backgroundColor: "white",
@@ -16,14 +14,7 @@ function Login() {
 
   const handleLogin = async () => {
     console.log("Logging in with", formData);
-    fetch("http://backend:3000/user/login", {
-      method: "POST",
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setUser(data);
-      });
+    login(formData);
   };
 
   return (
