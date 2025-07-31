@@ -41,7 +41,6 @@ userRoute.post("/new", async (req, res) => {
     username: req.body.username,
     password: await hashPassword(req.body.password),
     name: req.body.name,
-    contact: req.body.contact,
     club: req.body.club,
     role: req.body.role,
   };
@@ -58,7 +57,6 @@ userRoute.post("/update", async (req, res) => {
     username: req.body.username,
     password: await hashPassword(req.body.password),
     name: req.body.name,
-    contact: req.body.contact,
     club: req.body.club,
     role: req.body.role,
   };

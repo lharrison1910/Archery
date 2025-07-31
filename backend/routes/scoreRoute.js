@@ -20,6 +20,7 @@ scoreRoute.post("/new", async (req, res) => {
   res.send(response);
 });
 
+// update scores
 scoreRoute.post("/update", async (req, res) => {
   const [id, scores] = [req.body.id, req.body.scores];
   const response = await updateData({ table: "Scores", userId: id, scores });

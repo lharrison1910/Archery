@@ -74,7 +74,7 @@ export const updateData = async (param) => {
     } else {
       const response = await client.query(`
             UPDATE Users 
-            SET username=${userData.username}, password=${userData.password}, name=${userData.name}, contact=${userData.contactNo}, club=${userData.club}, role=${userData.role}
+            SET username='${userData.username}', password='${userData.password}', name='${userData.name}', club='${userData.club}', role='${userData.role}'
             WHERE id='${userData.id}'
             `);
       return response;
