@@ -12,8 +12,6 @@ services:
   database:
     container_name: db
     image: postgres:latest
-    ports:
-      - "5432:5432"
     volumes:
       - db:/var/lib/postgresql
     environment:
